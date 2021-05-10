@@ -22,6 +22,7 @@ app.use(express.static('public'))
 // On this '/' use the router and perform get
 app.use('/', router)
 app.use('/notes', router)
+app.use('/api', routes)
 
 // Setting up get requests for html routes (This is for main page of local host [Nothing after /])
 router.get('/', (req, res) => {
@@ -35,9 +36,12 @@ router.get('/notes', (req, res) =>{
 
 // Setting up get request for html routes (the html you get for /api/notes in URL.)
 router.get('/api/notes', (req, res) => {
-
+    res.json(database.getAllNotes())
+    console.log(value)
+    res.send(value)
 })
 
+// Listening...
 app.listen(PORT, () => {
     console.log(`App Listening at http://localhost:${PORT}`)
 })
