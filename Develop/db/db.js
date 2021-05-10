@@ -3,7 +3,7 @@ const util = require('util')
 
 const fs = require('fs')
 
-const { v4: uuidv4 } = require ('uuid')
+const { v4: uuidv4 } = require('uuid')
 
 const readFile = util.promisify(fs.readFile)
 const writeFile = util.promisify(fs.writeFile)

@@ -10,6 +10,8 @@ const path = require('path')
 // Allow deployment or use on local host 3000
 const PORT = process.env.PORT || 3000
 
+const database = require('./db/db')
+
 // Allowing use json contetn
 app.use(express.json())
 
@@ -22,11 +24,11 @@ app.use(express.static('public'))
 // On this '/' use the router and perform get
 app.use('/', router)
 app.use('/notes', router)
-app.use('/api', routes)
+app.use('/api', router)
 
 // Setting up get requests for html routes (This is for main page of local host [Nothing after /])
 router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/'))
+    res.sendFile(path.join(__dirname, 'public/index.html'))
 })
 
 // Setting up get request for html routes (the html you get for /notes in URL.)
@@ -35,10 +37,16 @@ router.get('/notes', (req, res) =>{
 })
 
 // Setting up get request for html routes (the html you get for /api/notes in URL.)
-router.get('/api/notes', (req, res) => {
-    res.json(database.getAllNotes())
+router.get('/api/notes', async (req, res) => {
+    const notes = await database.getAllNotes()
+    return res.json(notes)
     console.log(value)
     res.send(value)
+})
+
+
+router.post('/api/notes', async (req, res) => {
+    const notes = await database.deleteNote(req.params.id)
 })
 
 // Listening...
