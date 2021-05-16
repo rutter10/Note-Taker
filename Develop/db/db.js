@@ -8,6 +8,7 @@ const writeFile = util.promisify(fs.writeFile);
 
 // Creating a class for DB
 class Database {
+
   // Method to getAllNotes
   async getAllNotes() {
     return readFile('db/db.json', { encoding: 'utf8' }).then((notes) => {
